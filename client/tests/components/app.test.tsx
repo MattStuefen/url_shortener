@@ -9,10 +9,10 @@ describe('App', () => {
     it("Render App", async () => {
         render(<App/>);
 
-        const header = await screen.getByRole("heading", { level: 1});
-        expect(header).not.toBe(null);
+        const shortenerHeader = await screen.getByText("Shorten a URL", {});
+        expect(shortenerHeader).not.toBe(null);
 
-        const button = await screen.getByText("count is 0", {});
-        expect(button).not.toBe(null);
+        const shortenedListHeader = await screen.getByText("Last 10 Shortened URLs", {});
+        expect(shortenedListHeader).not.toBe(null);
     });
 });

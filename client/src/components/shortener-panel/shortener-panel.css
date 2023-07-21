@@ -1,0 +1,81 @@
+.shortener-panel{
+    margin: 50px auto;
+    padding: 0;
+    width: 1000px;
+
+    border: 1px solid black;
+    background: white;
+}
+
+.shortener-panel h1{
+    padding: 0 16px;
+    font-weight: bold;
+    font-size: 24px;
+    background: #dde5ff;
+    border-bottom: 1px solid black;
+    margin: 0;
+}
+
+.shortener-panel form{
+    padding: 10px 16px;
+}
+
+.shortener-panel form h2{
+    padding: 0;
+    margin: 0 0 14px 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.shortener-field {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 300px;
+    padding-bottom: 12px;
+}
+
+.shortener-field h3{
+    margin: 2px 0;
+    font-size: smaller;
+    font-style: italic;
+}
+
+.shortener-field input{
+    font-style: italic;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid gray;
+}
+
+.shortener-field input:focus{
+    border: 1px solid gray;
+    outline: none;
+    box-shadow: 0 0 7px -2px rgb(102, 175, 233);
+}
+
+.composite-url{
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+}
+
+.composite-url span{
+    font-weight: bold;
+    padding: 24px 20px 0 20px;
+}
+
+.shortener-button{
+    margin-top: 6px;
+    font-weight: bold;
+    background: #fff2cc;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 6px 10px;
+}
+
+.shortener-button:hover{
+    background: #ffecb3;
+}
+
+.shortener-button:active{
+    background: #ffdf80;
+}

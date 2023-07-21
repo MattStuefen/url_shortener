@@ -1,0 +1,73 @@
+.v-navbar {
+    display: flex;
+    width: calc(100% - 2px);
+    padding: 0;
+    margin: 0;
+    background-color: #dde5ff;
+    border: 1px solid #b4c6ff;
+}
+
+.v-navbar .v-nav-list:last-child{
+    margin-left: auto;
+    margin-right: 16px;
+}
+
+.v-navbar,
+.v-navbar .v-brand,
+.v-nav-list,
+.v-nav-list > li,
+.v-nav-list > li > a{
+    height: 50px;
+}
+
+.v-navbar .v-brand,
+.v-navbar .v-brand:hover,
+.v-navbar .v-brand:focus {
+    font-size: 18px;
+    color: black;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.v-nav-list,
+.v-nav-list > li{
+    display: flex;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.v-brand,
+.v-navbar > .v-nav-list > li > a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    text-decoration: none;
+    color: black;
+}
+
+.v-navbar > .v-nav-list > li > a:hover,
+.v-navbar > .v-nav-list > li > a:focus{
+    color: white;
+}
+
+.v-navbar > .v-nav-list > li.active > a{
+    color: white;
+    background-color: #b4c6ff;
+}
+
+.logout-button:before{
+    content: "↩";
+    padding-right: 5px;
+}
+
+.logout-button{
+    font-weight: bold;
+    user-select: none;
+}
+
+.disabled{
+    color: gray !important;
+    pointer-events: none;
+}

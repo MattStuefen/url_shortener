@@ -16,8 +16,11 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "no-tabs": [
+      "error"
+    ],
     "indent": [
-      "error",
+      "off",
       4
     ],
     "semi": [

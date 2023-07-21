@@ -1,17 +1,17 @@
-import {useState} from 'react';
-import './app.css';
+import Navbar from "./navbar/navbar";
+import ShortenerPanel from "./shortener-panel/shortener-panel";
+import ShortenedList from "./shortened-list/shortened-list";
+import {useState} from "react";
+import {UrlRecord} from "./types";
 
-function App() {
-    const [count, setCount] = useState(0);
+function App(){
+    const [urlList, setUrlList] = useState<UrlRecord[]>([{longUrl: '/', shortUrl: '/'}]);
 
     return (
-        <div className="app-panel">
-            <h1>URL Shortener</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-            </div>
+        <div>
+            <Navbar/>
+            <ShortenerPanel onUrlShorted={(x: UrlRecord) => setUrlList([...urlList, x])}/>
+            <ShortenedList urlList={urlList}/>
         </div>
     );
 }

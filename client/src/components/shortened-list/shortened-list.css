@@ -1,0 +1,55 @@
+.shortened-panel{
+    margin: 50px auto;
+    padding: 0;
+    width: 1000px;
+
+    border: 1px solid black;
+    background: white;
+}
+
+.shortened-panel h1{
+    padding: 0 16px;
+    font-weight: bold;
+    font-size: 24px;
+    background: #dde5ff;
+    border-bottom: 1px solid black;
+    margin: 0;
+}
+
+.shortened-panel div{
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: row;
+}
+
+.shortened-panel table{
+    margin: 10px;
+    text-align: right;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.shortened-panel table th{
+    margin: 10px;
+    text-align: right;
+    border: 1px solid black;
+    background: #e6e6e6;
+    padding: 6px;
+}
+
+.shortened-panel table td{
+    margin: 10px;
+    text-align: right;
+    border: 1px solid black;
+    padding: 6px;
+}
+
+.shortened-panel table td:first-child{
+    min-width: 300px;
+}
+
+.shortened-panel table td:last-child{
+    width: 100%;
+}
+
+
