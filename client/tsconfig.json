@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ESNext",
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "noImplicitAny": false,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "@client/*": ["./src/*"],
+      "@tests/*": ["./tests/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "ts-node": {
+    "files": true
+  }
+}

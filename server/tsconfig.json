@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": false,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "noImplicitAny": false,
+        "baseUrl": ".",
+        "paths": {
+            "@server/*": ["src/*"],
+            "@tests/*": ["tests/*"]
+        }
+    },
+    "include": [
+        "src/**/*",
+        "tests/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "ts-node": {
+        "files": true
+    }
+}
