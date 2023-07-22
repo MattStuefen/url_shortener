@@ -14,8 +14,8 @@ function ShortenedList(props) {
                 </thead>
                 <tbody>
                 {
-                    props.urlList.slice(-10).reverse().map((x: UrlRecord, i: number) => (
-                        <tr key={i}>
+                    props.urlList.map((x: UrlRecord) => (
+                        <tr key={x.id}>
                             <td><a href={x.shortUrl}>{x.shortUrl}</a></td>
                             <td><a href={x.longUrl}>{x.longUrl}</a></td>
                         </tr>

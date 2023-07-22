@@ -1,14 +1,35 @@
 import './shortener-panel.css';
 import {useState} from "react";
 
-function ShortenerPanel(props) {
+function ShortenerPanel(props: {onUrlShortened: () => void}) {
     const [longUrl, setLongUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
 
-    const onSubmit = (e) => {
+    const standardizeUrl = (url: string) => {
+        const urlRegex = /^http[s]*:\/\//g;
+        return (url.match(urlRegex)) ? url: `http://${url}`;
+    };
+
+    const onSubmit = async (e) => {
+        // TODO: Add more validation!
         e.preventDefault();
-        if(!longUrl) alert(`URL not specified!`);
-        else props.onUrlShorted({shortUrl: shortUrl, longUrl: longUrl});
+        if(!longUrl) return alert(`URL not specified!`);
+
+        const body = JSON.stringify({shortUrl: shortUrl, longUrl: standardizeUrl(longUrl)});
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        };
+
+        try{
+            const res = await fetch("/api/url", {method: "post", body: body, headers: headers });
+            if(res.status == 200)
+                props.onUrlShortened();
+            else
+                alert(`Failed to store url!`);
+        } catch { // do nothing
+            alert(`Failed to store url!`);
+        }
     };
 
     return (

@@ -5,10 +5,19 @@ import {FastifyError} from "@fastify/error";
 
 export const app: FastifyInstance = Fastify();
 app.register(require("@fastify/static"), {root: path.join(__dirname, '../../client/dist')});
+app.register(require("@server/plugins/db-plugin"));
 
 app.register(async (routes: FastifyInstance) => {
     routes.register(require("@server/routes/health"));
-    routes.register(require("@server/routes/index"));
+    routes.register(require("@server/routes/url-shortener"), {prefix: '/api'});
+});
+
+app.setNotFoundHandler(async (req: FastifyRequest, res: FastifyReply) => {
+    const longUrl = app.db.getLongUrl(req.url.slice(1));
+    if(longUrl)
+        await res.code(301).redirect(longUrl);
+    else
+        await res.code(404).send();
 });
 
 app.addHook("onResponse", async (req: FastifyRequest, res: FastifyReply) => {
