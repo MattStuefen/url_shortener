@@ -8,7 +8,9 @@ function Navbar() {
                 <li className={`${window.location.pathname == "/" ? 'active' : ''}`}><a href="/">Short Link</a></li>
             </ul>
             <ul className="v-nav-list">
-                <li><a href="/" className="logout-button disabled">Logout</a></li>
+                {/* TODO: Implement user login and re-enable.
+                    <li><a href="/" className="logout-button disabled">Logout</a></li>
+                */}
             </ul>
         </nav>
     );

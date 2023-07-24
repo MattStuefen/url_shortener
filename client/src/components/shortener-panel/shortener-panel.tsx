@@ -8,16 +8,17 @@ function ShortenerPanel() {
     const [longUrl, setLongUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
     const [shortened, setShortened] = useState(null as UrlRecord);
+    const urlRegex = /^http[s]*:\/\//g;
+    const shortUrlRegex = /^[A-Za-z0-9]+$/g;
 
     const standardizeUrl = (url: string) => {
-        const urlRegex = /^http[s]*:\/\//g;
         return (url.match(urlRegex)) ? url: `http://${url}`;
     };
 
     const onSubmit = async (e) => {
-        // TODO: Add more validation!
         e.preventDefault();
-        if(!longUrl) return alert(`URL not specified!`);
+        if(!longUrl) return alert('URL not specified!');
+        if(shortUrl && !shortUrl.match(shortUrlRegex)) return alert('Invalid short url!');
 
         try{
             const body = {shortUrl: shortUrl, longUrl: standardizeUrl(longUrl)};
