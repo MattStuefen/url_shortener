@@ -1,7 +1,8 @@
 import {UrlRecord} from "@server/db/models/url-record";
 
 export type Dao = {
-    insertUrl(longUrl: string, shortUrl: string): boolean;
-    getRecentUrls(count: number): UrlRecord[];
-    getLongUrl(shortUrl: string): string;
+    initialize(): Promise<boolean>;
+    insertUrl(longUrl: string, shortUrl: string): Promise<boolean>;
+    getRecentUrls(count: number): Promise<UrlRecord[]>;
+    getLongUrl(shortUrl: string): Promise<string>;
 }

@@ -6,7 +6,7 @@ const invalidShortUrls: Set<string> = new Set<string>(["health"]);
 export default async function routes(router: FastifyInstance) {
     router.get("/urls", async(req: FastifyRequest) => {
         const query = <Record<string, any>> req.query;
-        return router.db.getRecentUrls(query.count);
+        return await router.db.getRecentUrls(query.count);
     });
 
     router.post("/url", async(req: FastifyRequest, res: FastifyReply) => {
@@ -14,7 +14,10 @@ export default async function routes(router: FastifyInstance) {
         if(invalidShortUrls.has(body.shortUrl))
             return res.code(409).send();
 
-        const status = router.db.insertUrl(body.longUrl, body.shortUrl || base62(8)) ? 200 : 409;
+        if(!body.longUrl)
+            throw new Error("Invalid value for field 'longUrl'.");
+
+        const status = await router.db.insertUrl(body.longUrl, body.shortUrl || base62(8)) ? 200 : 409;
         return res.code(status).send();
     });
 }

@@ -7,24 +7,29 @@ const urls: UrlRecord[] = [
     <UrlRecord>{id: 3, longUrl: "https://www.ebay.com", shortUrl: "ebay"}
 ];
 
-const insertUrl = (longUrl: string, shortUrl: string): boolean => {
+const initialize = async (): Promise<boolean> => {
+    return Promise.resolve(true);
+};
+
+const insertUrl = (longUrl: string, shortUrl: string): Promise<boolean> => {
     if(urls.some(x => x.shortUrl == shortUrl))
-        return false;
+        return Promise.resolve(false);
 
     const newId = (urls.slice(-1)[0]?.id ?? 0) + 1;
     urls.push(<UrlRecord>{id: newId, longUrl: longUrl, shortUrl: shortUrl});
-    return true;
+    return Promise.resolve(true);
 };
 
-const getRecentUrls = (count: number): UrlRecord[] => {
-    return urls.slice(-count).reverse();
+const getRecentUrls = (count: number): Promise<UrlRecord[]> => {
+    return Promise.resolve(urls.slice(-count).reverse());
 };
 
-const getLongUrl = (shortUrl: string): string => {
-    return urls.filter(x => x.shortUrl == shortUrl)[0]?.longUrl;
+const getLongUrl = (shortUrl: string): Promise<string> => {
+    return Promise.resolve(urls.filter(x => x.shortUrl == shortUrl)[0]?.longUrl);
 };
 
 export default <Dao> {
+    initialize,
     insertUrl,
     getRecentUrls,
     getLongUrl

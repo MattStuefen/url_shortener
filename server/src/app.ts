@@ -13,7 +13,7 @@ app.register(async (routes: FastifyInstance) => {
 });
 
 app.setNotFoundHandler(async (req: FastifyRequest, res: FastifyReply) => {
-    const longUrl = app.db.getLongUrl(req.url.slice(1));
+    const longUrl = await app.db.getLongUrl(req.url.slice(1));
     if(longUrl)
         await res.code(301).redirect(longUrl);
     else
@@ -25,5 +25,5 @@ app.addHook("onResponse", async (req: FastifyRequest, res: FastifyReply) => {
 });
 
 app.addHook("onError", async(req: FastifyRequest, res: FastifyReply, err: FastifyError) => {
-    Logger.error(`[ERROR] ${err.message}`);
+    Logger.error(`[ERROR] ${err.stack}`);
 });
