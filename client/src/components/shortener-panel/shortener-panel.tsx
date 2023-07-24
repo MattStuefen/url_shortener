@@ -1,7 +1,9 @@
 import './shortener-panel.css';
 import {useState} from "react";
+import * as EventManager from "../../utilities/event-manager";
+import * as FetchUtils from "../../utilities/fetch-utils";
 
-function ShortenerPanel(props: {onUrlShortened: () => void}) {
+function ShortenerPanel() {
     const [longUrl, setLongUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
 
@@ -15,19 +17,11 @@ function ShortenerPanel(props: {onUrlShortened: () => void}) {
         e.preventDefault();
         if(!longUrl) return alert(`URL not specified!`);
 
-        const body = JSON.stringify({shortUrl: shortUrl, longUrl: standardizeUrl(longUrl)});
-        const headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        };
-
         try{
-            const res = await fetch("/api/url", {method: "post", body: body, headers: headers });
-            if(res.status == 200)
-                props.onUrlShortened();
-            else
-                alert(`Failed to store url!`);
-        } catch { // do nothing
+            const body = {shortUrl: shortUrl, longUrl: standardizeUrl(longUrl)};
+            await FetchUtils.post("/api/url", body);
+            EventManager.notify(EventManager.Events.UrlShortened);
+        } catch {
             alert(`Failed to store url!`);
         }
     };
@@ -38,7 +32,8 @@ function ShortenerPanel(props: {onUrlShortened: () => void}) {
             <form onSubmit={(e) => e.preventDefault()}>
                 <label className="shortener-field">
                     <h3>Full URL (required):</h3>
-                    <input type="text" placeholder="Long URL" value={longUrl}
+                    <input type="text" value={longUrl} data-testid="longUrl"
+                           placeholder="Long URL"
                            onChange={(e) => setLongUrl(e.target.value)}/>
                 </label>
                 <div className="composite-url">
@@ -49,11 +44,13 @@ function ShortenerPanel(props: {onUrlShortened: () => void}) {
                     <span>/</span>
                     <label className="shortener-field">
                         <h3>Short (optional):</h3>
-                        <input type="text" placeholder="Desired short url ending" value={shortUrl}
+                        <input type="text" value={shortUrl} data-testid="shortUrl"
+                               placeholder="Desired short url ending"
                                onChange={(e) => setShortUrl(e.target.value)}/>
                     </label>
                 </div>
-                <input className="shortener-button" type="submit" value="Shorten URL" onClick={onSubmit}/>
+                <input className="shortener-button" type="submit" data-testid="submit"
+                       value="Shorten URL" onClick={onSubmit}/>
             </form>
         </div>
     );
