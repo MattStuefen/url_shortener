@@ -17,7 +17,8 @@ export default async function routes(router: FastifyInstance) {
         if(!body.longUrl)
             throw new Error("Invalid value for field 'longUrl'.");
 
-        const status = await router.db.insertUrl(body.longUrl, body.shortUrl || base62(8)) ? 200 : 409;
-        return res.code(status).send();
+        const urlRecord = await router.db.insertUrl(body.longUrl, body.shortUrl || base62(8));
+        const status = urlRecord ? 200 : 409;
+        return res.code(status).send(urlRecord);
     });
 }

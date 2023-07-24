@@ -6,9 +6,9 @@ import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import ShortenerPanel from "../../../src/components/shortener-panel/shortener-panel";
 import * as EventManager from "../../../src/utilities/event-manager";
 
-let onPost: (url: string, body: Record<string, string>) => Promise<Response> = null;
+let onPost: <T>(url: string, params?: Record<string, string>) => Promise<T> = null;
 jest.mock('../../../src/utilities/fetch-utils', () => ({
-    post: (url, body) => onPost && onPost(url, body)
+    postWithResponse: (url, body) => onPost && onPost(url, body)
 }));
 
 describe('ShortenerPanel', () => {
@@ -16,11 +16,11 @@ describe('ShortenerPanel', () => {
         const shortUrl = "abc";
         const longUrl = "http://abc.com/";
 
-        onPost = async (url: string, body: Record<string, string>): Promise<Response> => {
+        onPost = async <T,>(url: string, body: Record<string, string>): Promise<T> => {
             expect(url).toBe('/api/url');
             expect(body["shortUrl"]).toBe(shortUrl);
             expect(body["longUrl"]).toBe(longUrl);
-            return Promise.resolve(null);
+            return Promise.resolve({id: 4, shortUrl: shortUrl, longUrl: longUrl} as T);
         };
 
         const onUrlShortened = jest.fn(() => null);

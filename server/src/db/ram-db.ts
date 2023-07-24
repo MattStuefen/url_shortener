@@ -11,13 +11,14 @@ const initialize = async (): Promise<boolean> => {
     return Promise.resolve(true);
 };
 
-const insertUrl = (longUrl: string, shortUrl: string): Promise<boolean> => {
+const insertUrl = (longUrl: string, shortUrl: string): Promise<UrlRecord> => {
     if(urls.some(x => x.shortUrl == shortUrl))
-        return Promise.resolve(false);
+        return Promise.resolve(null);
 
     const newId = (urls.slice(-1)[0]?.id ?? 0) + 1;
-    urls.push(<UrlRecord>{id: newId, longUrl: longUrl, shortUrl: shortUrl});
-    return Promise.resolve(true);
+    const url = <UrlRecord>{id: newId, longUrl: longUrl, shortUrl: shortUrl};
+    urls.push(url);
+    return Promise.resolve(url);
 };
 
 const getRecentUrls = (count: number): Promise<UrlRecord[]> => {

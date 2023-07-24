@@ -2,10 +2,12 @@ import './shortener-panel.css';
 import {useState} from "react";
 import * as EventManager from "../../utilities/event-manager";
 import * as FetchUtils from "../../utilities/fetch-utils";
+import {UrlRecord} from "../types";
 
 function ShortenerPanel() {
     const [longUrl, setLongUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
+    const [shortened, setShortened] = useState(null as UrlRecord);
 
     const standardizeUrl = (url: string) => {
         const urlRegex = /^http[s]*:\/\//g;
@@ -19,9 +21,11 @@ function ShortenerPanel() {
 
         try{
             const body = {shortUrl: shortUrl, longUrl: standardizeUrl(longUrl)};
-            await FetchUtils.post("/api/url", body);
+            const url = await FetchUtils.postWithResponse<UrlRecord>("/api/url", body);
+            setShortened(url);
             EventManager.notify(EventManager.Events.UrlShortened);
         } catch {
+            // TODO: Notify user of reason - i.e. duplicate short url/server error
             alert(`Failed to store url!`);
         }
     };
@@ -34,7 +38,10 @@ function ShortenerPanel() {
                     <h3>Full URL (required):</h3>
                     <input type="text" value={longUrl} data-testid="longUrl"
                            placeholder="Long URL"
-                           onChange={(e) => setLongUrl(e.target.value)}/>
+                           onChange={(e) => {
+                               setLongUrl(e.target.value);
+                               setShortened(null);
+                           }}/>
                 </label>
                 <div className="composite-url">
                     <label className="shortener-field">
@@ -46,11 +53,25 @@ function ShortenerPanel() {
                         <h3>Short (optional):</h3>
                         <input type="text" value={shortUrl} data-testid="shortUrl"
                                placeholder="Desired short url ending"
-                               onChange={(e) => setShortUrl(e.target.value)}/>
+                               onChange={(e) => {
+                                   setShortUrl(e.target.value);
+                                   setShortened(null);
+                               }}/>
                     </label>
                 </div>
-                <input className="shortener-button" type="submit" data-testid="submit"
-                       value="Shorten URL" onClick={onSubmit}/>
+                <div className="url-submission-row">
+                    <input className="shortener-button" type="submit" data-testid="submit"
+                           value="Shorten URL" onClick={onSubmit}/>
+                    { shortened
+                        ? <div className="url-submit-notification">
+                            <span className="url-submission-header">Created short url:</span>
+                            <a href={shortened.shortUrl} target="_blank">
+                                {`http://${window.location.host}/${shortened.shortUrl}`}
+                            </a>
+                          </div>
+                        : <></>}
+
+                </div>
             </form>
         </div>
     );

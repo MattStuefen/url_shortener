@@ -79,3 +79,27 @@
 .shortener-button:active{
     background: #ffdf80;
 }
+
+.url-submission-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.url-submit-notification {
+    margin: 6px 0 0 10px;
+    padding: 3px 0;
+    border-radius: 4px;
+}
+
+.url-submission-header{
+    padding: 0 10px;
+    color: green;
+    border-radius: 4px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.url-submit-notification a {
+    font-style: italic;
+    padding-right: 20px;
+}

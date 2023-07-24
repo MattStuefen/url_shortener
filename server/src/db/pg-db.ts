@@ -40,10 +40,11 @@ const isDbEmpty = async (): Promise<boolean> => {
     }
 };
 
-const insertUrl = async (longUrl: string, shortUrl: string): Promise<boolean> => {
+const insertUrl = async (longUrl: string, shortUrl: string): Promise<UrlRecord> => {
     const sql = `INSERT INTO url(short_url, long_url) values($1, $2) returning id;`;
-    await pool.query(sql, [shortUrl, longUrl]);
-    return true;
+    const res = await pool.query(sql, [shortUrl, longUrl]);
+    const id = res.rows[0]?.id ?? -1;
+    return <UrlRecord> {id: id, shortUrl: shortUrl, longUrl: longUrl};
 };
 
 const getRecentUrls = async (count: number): Promise<UrlRecord[]> => {

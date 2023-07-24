@@ -11,7 +11,12 @@ const buildUrl = (url: string, params?: Record<string, string|number>): string =
     return paramString !== "" ? `${url}?${paramString}` : url;
 };
 
-export const post = async (url: string, body: Record<string, string>): Promise<Response> => {
+export const postWithResponse = async <T>(url: string, body: Record<string, string>): Promise<T> => {
+    const res = await post(url, body);
+    return <T>(await res.json());
+};
+
+const post = async (url: string, body: Record<string, string>): Promise<Response> => {
     const bodyStr = JSON.stringify(body);
     const headers = {
         'Accept': 'application/json',
