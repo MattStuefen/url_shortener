@@ -6,10 +6,12 @@ import * as FetchUtils from "../../utilities/fetch-utils";
 
 function ShortenedList() {
     const [urlList, setUrlList] = useState<UrlRecord[]>([]);
+    const [count, setCount] = useState<number>(10);
 
     const loadUrls = async() => {
         try{
-            const urls = await FetchUtils.getJson<UrlRecord[]>("/api/urls", {count: 10});
+            const params = !isNaN(count) ? {count: count} : null;
+            const urls = await FetchUtils.getJson<UrlRecord[]>("/api/urls", params);
             setUrlList(urls);
         } catch (e) {
             alert(`Failed to load urls! ${e}`);
@@ -22,10 +24,25 @@ function ShortenedList() {
         return () => EventManager.off(EventManager.Events.UrlShortened, loadUrls);
     }, []);
 
+    useEffect(() => {
+        loadUrls().then();
+    }, [count]);
 
     return (
         <div className="shortened-panel">
-            <h1>Last 10 Shortened URLs</h1>
+            <div className="shortened-panel-header">
+                <span>Shortened URLs</span>
+                <label>
+                    Show last:
+                    <select value={count} onChange={async e => setCount(+e.target.value)}>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                        <option value={'NaN'}>- All -</option>
+                    </select>
+                </label>
+            </div>
             <table>
                 <thead>
                 <tr>

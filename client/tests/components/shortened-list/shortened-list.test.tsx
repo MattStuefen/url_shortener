@@ -26,6 +26,6 @@ describe('ShortenedList', () => {
         };
 
         await act(async () => await render(<ShortenedList/>));
-        await waitFor(() => expect(onListLoaded).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(onListLoaded).toHaveBeenCalled());
     });
 });

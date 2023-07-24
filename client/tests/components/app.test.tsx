@@ -16,7 +16,7 @@ describe('App', () => {
         const shortenerHeader = await screen.getByText("Shorten a URL", {});
         expect(shortenerHeader).not.toBe(null);
 
-        const shortenedListHeader = await screen.getByText("Last 10 Shortened URLs", {});
+        const shortenedListHeader = await screen.getByText("Shortened URLs", {});
         expect(shortenedListHeader).not.toBe(null);
     });
 });
